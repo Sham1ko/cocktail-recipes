@@ -1,30 +1,60 @@
 <template>
-  <main class="details-view container bg-light rounded mt-5">
-    <div class="h-100">
-      <h1>About</h1>
+  <main
+    class="about-view container d-flex flex-column justify-content-center align-items-center flex-fill"
+  >
+    <div class="about-card bg-light rounded p-4 shadow w-100 w-md-75">
+      <h1 class="mb-4">🍹 About Cocktail Recipes</h1>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam alias
-        veritatis cum non iure necessitatibus aliquam autem eius assumenda
-        laborum, nulla dolor laboriosam maiores aliquid saepe, fugiat omnis at.
-        Aliquid commodi ratione voluptas dolorem ullam hic quasi unde deleniti
-        fugiat distinctio vel est, ut quae ipsam, aperiam officiis expedita eos
-        facilis tenetur omnis voluptatem? Quae quas architecto officia delectus
-        dolorem vel repellendus eaque accusantium id possimus quia tempore sed
-        cupiditate quod consectetur, rem doloribus eum officiis beatae
-        perferendis fugit fuga modi esse. Repellendus similique, unde aliquam
-        aspernatur nam aut quae eligendi quos eos quo assumenda fugit iste sequi
-        vitae corrupti?
+        This is a simple Vue 3 + Vite web application where you can search for
+        your favorite cocktails or get a random drink suggestion. Powered by the
+        <a
+          href="https://www.thecocktaildb.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >TheCocktailDB API</a
+        >, the app offers clean UI and fast interactions for cocktail lovers.
+      </p>
+      <p>
+        You can browse drink details, ingredients, and preparation steps in a
+        clean and responsive interface.
+      </p>
+      <p>
+        🔗 Check out the source code on
+        <a
+          href="https://github.com/sham1ko/cocktail-recipes"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub Repository</a
+        >.
+      </p>
+      <p>
+        🙋‍♂️ Created by
+        <a
+          href="https://github.com/sham1ko"
+          target="_blank"
+          rel="noopener noreferrer"
+          >@sham1ko</a
+        >
       </p>
     </div>
   </main>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<script setup>
+// ничего не нужно
+</script>
+
+<style scoped>
+.about-view {
+  min-height: 100vh;
+}
+
+.about-card a {
+  text-decoration: underline;
+  color: #0d6efd;
+}
+
+.about-card a:hover {
+  color: #0a58ca;
 }
 </style>

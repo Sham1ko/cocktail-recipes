@@ -1,23 +1,36 @@
 <template>
-  <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-2 mb-4">
-    <div class="card">
-      <img :src="drink.strDrinkThumb" class="card-img-top" alt="Drink Image" />
-      <div class="card-body">
-        <h5 class="card-title">{{ drink.strDrink }}</h5>
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-2 mb-4">
+    <RouterLink :to="'/cocktail-recipes/' + drink.idDrink" class="card-link">
+      <div class="card h-100 shadow-sm">
+        <img
+          :src="drink.strDrinkThumb"
+          class="card-img-top"
+          :alt="drink.strDrink"
+        />
+        <div class="card-body">
+          <h5 class="card-title mb-0">{{ drink.strDrink }}</h5>
+        </div>
       </div>
-      <div class="card-footer">
-        <RouterLink :to="'/airba-test/' + drink.idDrink" class="btn btn-primary"
-          >Подробнее</RouterLink
-        >
-      </div>
-    </div>
+    </RouterLink>
   </div>
 </template>
 
 <script>
-import {RouterLink} from "vue-router";
-
 export default {
   props: ["drink"],
 };
 </script>
+
+<style scoped>
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block;
+}
+
+.card-link:hover .card {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+</style>

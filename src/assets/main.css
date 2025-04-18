@@ -2,10 +2,25 @@
 
 #app {
   height: 100%;
+  position: relative;
 }
 
+/* Фоновое изображение */
 body {
-  background: url("@/assets/cocktail-background.jpg") no-repeat center fixed;
+  background: url("@/assets/cocktail-background.jpg") no-repeat center center
+    fixed;
   background-size: cover;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Затемнение поверх фона */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55); /* можно поиграться с прозрачностью */
+  z-index: -1;
 }

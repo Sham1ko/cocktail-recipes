@@ -1,20 +1,20 @@
-import {createRouter, createWebHistory} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/airba-test/",
+      path: "/cocktail-recipes/",
       name: "home",
       component: () => import("../views/HomeView.vue"),
     },
     {
-      path: "/airba-test/about",
+      path: "/cocktail-recipes/about",
       name: "about",
       component: () => import("../views/AboutView.vue"),
     },
     {
-      path: "/airba-test/:id",
+      path: "/cocktail-recipes/:id",
       name: "details",
       component: () => import("../views/DetailView.vue"),
     },

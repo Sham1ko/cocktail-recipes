@@ -1,93 +1,111 @@
 <template>
-  <main class="details-view container bg-light rounded">
-    <div class="row">
-      <div class="col-12 col-sm-12 col-md-4 col-lg-6 col-xl-6 col-xxl-6 p-5">
+  <main
+    class="details-view container d-flex flex-column justify-content-center align-items-center flex-grow-1"
+  >
+    <div v-if="drink" class="row bg-light rounded shadow overflow-hidden">
+      <!-- Image -->
+      <div
+        class="col-12 col-md-6 p-4 d-flex justify-content-center align-items-center"
+      >
         <img
           :src="drink.strDrinkThumb"
-          class="img-thumbnail"
-          alt="Drink Image" />
+          class="img-fluid rounded border"
+          :alt="drink.strDrink"
+        />
       </div>
-      <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6 p-5">
-        <h3 class="fw-bold">{{ drink.strDrink }}</h3>
-        <p>Категория: {{ drink.strCategory }}</p>
-        <p>Алкогольность: {{ drink.strAlcoholic }}</p>
-        <h4>Ингридиенты</h4>
-        <ul>
-          <li v-if="drink.strIngredient1">
-            {{ drink.strIngredient1 }} - {{ drink.strMeasure1 }}
-          </li>
-          <li v-if="drink.strIngredient2">
-            {{ drink.strIngredient2 }} - {{ drink.strMeasure2 }}
-          </li>
-          <li v-if="drink.strIngredient3">
-            {{ drink.strIngredient3 }} - {{ drink.strMeasure3 }}
-          </li>
-          <li v-if="drink.strIngredient4">
-            {{ drink.strIngredient4 }} - {{ drink.strMeasure4 }}
-          </li>
-          <li v-if="drink.strIngredient5">
-            {{ drink.strIngredient5 }} - {{ drink.strMeasure5 }}
-          </li>
-          <li v-if="drink.strIngredient6">
-            {{ drink.strIngredient6 }} - {{ drink.strMeasure6 }}
-          </li>
-          <li v-if="drink.strIngredient7">
-            {{ drink.strIngredient7 }} - {{ drink.strMeasure7 }}
-          </li>
-          <li v-if="drink.strIngredient8">
-            {{ drink.strIngredient8 }} - {{ drink.strMeasure8 }}
-          </li>
-          <li v-if="drink.strIngredient9">
-            {{ drink.strIngredient9 }} - {{ drink.strMeasure9 }}
-          </li>
-          <li v-if="drink.strIngredient10">
-            {{ drink.strIngredient10 }} - {{ drink.strMeasure10 }}
-          </li>
-          <li v-if="drink.strIngredient11">
-            {{ drink.strIngredient11 }} - {{ drink.strMeasure11 }}
-          </li>
-          <li v-if="drink.strIngredient12">
-            {{ drink.strIngredient12 }} - {{ drink.strMeasure12 }}
-          </li>
-          <li v-if="drink.strIngredient13">
-            {{ drink.strIngredient13 }} - {{ drink.strMeasure13 }}
-          </li>
-          <li v-if="drink.strIngredient14">
-            {{ drink.strIngredient14 }} - {{ drink.strMeasure14 }}
-          </li>
-          <li v-if="drink.strIngredient15">
-            {{ drink.strIngredient15 }} - {{ drink.strMeasure15 }}
+
+      <!-- Info -->
+      <div class="col-12 col-md-6 p-4">
+        <h2 class="fw-bold mb-3">{{ drink.strDrink }}</h2>
+
+        <p><strong>Category:</strong> {{ drink.strCategory }}</p>
+        <p><strong>Alcoholic:</strong> {{ drink.strAlcoholic }}</p>
+        <p><strong>Glass type:</strong> {{ drink.strGlass }}</p>
+
+        <h4 class="mt-4">🧪 Ingredients</h4>
+        <ul class="list-unstyled">
+          <li
+            v-for="(ingredient, index) in ingredients"
+            :key="index"
+            class="mb-1"
+          >
+            - {{ ingredient.name
+            }}<span v-if="ingredient.measure"> — {{ ingredient.measure }}</span>
           </li>
         </ul>
-        <h4>Инструкция по приготовлению</h4>
+
+        <h4 class="mt-4">📋 Instructions</h4>
         <p>{{ drink.strInstructions }}</p>
+
+        <div
+          v-if="drink.strImageSource || drink.strImageAttribution"
+          class="mt-4 small text-muted"
+        >
+          <p v-if="drink.strImageSource">
+            📷 Image source:
+            <a :href="drink.strImageSource" target="_blank">{{
+              drink.strImageSource
+            }}</a>
+          </p>
+          <p v-if="drink.strImageAttribution">
+            📎 Attribution: {{ drink.strImageAttribution }}
+          </p>
+        </div>
       </div>
     </div>
   </main>
 </template>
 
 <script>
-import {RouterLink} from "vue-router";
-
 export default {
+  data() {
+    return {
+      drink: null,
+    };
+  },
+  computed: {
+    ingredients() {
+      if (!this.drink) return [];
+      const list = [];
+
+      for (let i = 1; i <= 15; i++) {
+        const name = this.drink[`strIngredient${i}`];
+        const measure = this.drink[`strMeasure${i}`];
+        if (name) {
+          list.push({ name, measure });
+        }
+      }
+
+      return list;
+    },
+  },
   mounted() {
     this.getDetailCocktail();
   },
-  data() {
-    return {
-      drink: {},
-    };
-  },
   methods: {
     async getDetailCocktail() {
-      let url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.$route.params.id}`;
-      let response = await fetch(url);
-      let json = await response.json();
-      this.drink = await json.drinks[0];
+      const id = this.$route.params.id;
+      const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+      const response = await fetch(url);
+      const json = await response.json();
+      this.drink = json.drinks?.[0] || null;
     },
   },
-  components: {RouterLink},
 };
 </script>
 
-<style></style>
+<style scoped>
+.details-view {
+  min-height: 100vh;
+  padding-top: 60px;
+}
+
+img {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+ul {
+  padding-left: 1rem;
+}
+</style>
