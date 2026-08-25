@@ -70,54 +70,36 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import { useCocktail } from "@/composables/useCocktail";
 
 const route = useRoute();
-const drink = ref(null);
-const isLoading = ref(true);
-const errorMessage = ref("");
+const { drink, isLoading, errorMessage, load } = useCocktail();
 
 const ingredients = computed(() => {
-    if (!drink.value) return [];
-    const list = [];
+  if (!drink.value) return [];
+  const list = [];
 
-    for (let i = 1; i <= 15; i++) {
-        const name = drink.value[`strIngredient${i}`];
-        const measure = drink.value[`strMeasure${i}`];
-        if (name) {
-            list.push({ name, measure });
-        }
+  for (let i = 1; i <= 15; i++) {
+    const name = drink.value[`strIngredient${i}`];
+    const measure = drink.value[`strMeasure${i}`];
+    if (name) {
+      list.push({ name, measure });
     }
+  }
 
-    return list;
+  return list;
 });
 
-watch(() => route.params.id, getDetailCocktail, { immediate: true });
-
-async function getDetailCocktail() {
-    isLoading.value = true;
-    errorMessage.value = "";
-
-    try {
-        const id = route.params.id;
-        const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error ${response.status}`);
-        }
-        drink.value = (await response.json()).drinks?.[0] || null;
-        if (drink.value) {
-            document.title = `${drink.value.strDrink} — Cocktail Recipes`;
-        } else {
-            errorMessage.value = "Cocktail not found.";
-        }
-    } catch {
-        drink.value = null;
-        errorMessage.value =
-            "Failed to load cocktail details. Please try again later.";
-    } finally {
-        isLoading.value = false;
+watch(
+  () => route.params.id,
+  async (id) => {
+    await load(id);
+    if (drink.value) {
+      document.title = `${drink.value.strDrink} — Cocktail Recipes`;
     }
-}
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped>

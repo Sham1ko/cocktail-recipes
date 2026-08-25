@@ -71,45 +71,23 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import CocktailCard from "@/components/CocktailCard.vue";
+import { getRandomCocktail } from "@/api/cocktailDb";
+import { useCocktails } from "@/composables/useCocktails";
 
 const router = useRouter();
+const { drinks, isLoading, errorMessage, search } = useCocktails();
 
-const drinks = ref([]);
 const nameCocktail = ref("");
-const isLoading = ref(false);
-const errorMessage = ref("");
 const hasSearched = ref(false);
 
 async function getData() {
-    isLoading.value = true;
-    hasSearched.value = true;
-    errorMessage.value = "";
-
-    try {
-        const query = encodeURIComponent(nameCocktail.value.trim());
-        const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`;
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error ${response.status}`);
-        }
-        drinks.value = (await response.json()).drinks ?? [];
-    } catch {
-        drinks.value = [];
-        errorMessage.value =
-            "Что-то пошло не так при поиске. Попробуйте ещё раз позже.";
-    } finally {
-        isLoading.value = false;
-    }
+  hasSearched.value = true;
+  await search(nameCocktail.value);
 }
 
 async function randomCocktail() {
-    const url = `https://www.thecocktaildb.com/api/json/v1/1/random.php`;
-    const response = await fetch(url);
-    const randomDrink = await response.json();
-    router.push({
-        name: "details",
-        params: { id: randomDrink.drinks[0].idDrink },
-    });
+  const randomDrink = await getRandomCocktail();
+  router.push({ name: "details", params: { id: randomDrink.idDrink } });
 }
 </script>
 
