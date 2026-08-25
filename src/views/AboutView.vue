@@ -40,10 +40,6 @@
   </main>
 </template>
 
-<script setup>
-// ничего не нужно
-</script>
-
 <style scoped>
 .about-view {
   min-height: 100vh;

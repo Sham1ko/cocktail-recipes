@@ -4,7 +4,7 @@ import router from './router'
 
 import './assets/main.css'
 import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
+import "bootstrap/js/dist/collapse"
 
 const app = createApp(App)
 

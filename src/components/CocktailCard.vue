@@ -9,6 +9,7 @@
           :src="drink.strDrinkThumb"
           class="card-img-top"
           :alt="drink.strDrink"
+          loading="lazy"
         />
         <div class="card-body">
           <h5 class="card-title mb-0">{{ drink.strDrink }}</h5>

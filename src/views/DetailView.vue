@@ -1,6 +1,6 @@
 <template>
     <main
-        class="details-view container d-flex flex-column justify-content-center align-items-center grow"
+        class="details-view container d-flex flex-column justify-content-center align-items-center flex-grow-1"
     >
         <div v-if="isLoading" class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -91,7 +91,7 @@ const ingredients = computed(() => {
     return list;
 });
 
-onMounted(getDetailCocktail);
+watch(() => route.params.id, getDetailCocktail, { immediate: true });
 
 async function getDetailCocktail() {
     isLoading.value = true;
