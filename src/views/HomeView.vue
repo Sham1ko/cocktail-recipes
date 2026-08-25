@@ -1,7 +1,7 @@
 <template>
   <main
     :class="[
-      'container d-flex flex-column justify-content-center align-items-center text-center flex-grow-1',
+      'container d-flex flex-column justify-content-center align-items-center text-center grow',
       drinks.length > 0 ? 'has-results-padding' : '',
     ]"
   >
