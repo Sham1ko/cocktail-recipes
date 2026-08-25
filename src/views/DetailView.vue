@@ -2,6 +2,16 @@
   <main
     class="flex w-full grow flex-col items-center justify-center px-4 pb-16 pt-28"
   >
+    <div class="mb-5 w-full max-w-4xl">
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur transition hover:border-amber-400/40 hover:bg-white/20"
+        @click="goBack"
+      >
+        ← Back
+      </button>
+    </div>
+
     <div
       v-if="isLoading"
       class="h-10 w-10 animate-spin rounded-full border-4 border-white/20 border-t-amber-400"
@@ -91,11 +101,20 @@
 
 <script setup>
 import { computed, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useCocktail } from "@/composables/useCocktail";
 
 const route = useRoute();
+const router = useRouter();
 const { drink, isLoading, errorMessage, load } = useCocktail();
+
+function goBack() {
+  if (window.history.length > 1) {
+    router.back();
+  } else {
+    router.push({ name: "home" });
+  }
+}
 
 const ingredients = computed(() => {
   if (!drink.value) return [];
