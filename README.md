@@ -6,7 +6,7 @@ A simple and stylish Vue 3 + Vite web app to browse and discover cocktail recipe
 
 - **Vue 3** – Reactive UI framework
 - **Vue Router** – Client-side routing
-- **Bootstrap 5** – For sleek and responsive design
+- **Tailwind CSS** – Utility-first styling for a sleek and responsive design
 - **Vite** – Fast and modern build tool
 - **@vitejs/plugin-vue** – Vue support in Vite
 

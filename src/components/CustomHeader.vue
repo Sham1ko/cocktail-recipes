@@ -47,6 +47,14 @@
         </li>
         <li>
           <RouterLink
+            :to="{ name: 'explore' }"
+            class="text-white/80 transition hover:text-amber-400"
+          >
+            🧭 Explore
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink
             :to="{ name: 'about' }"
             class="text-white/80 transition hover:text-amber-400"
           >
@@ -83,6 +91,15 @@
           >
             {{ count }}
           </span>
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink
+          :to="{ name: 'explore' }"
+          class="block rounded-lg px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-amber-400"
+          @click="isOpen = false"
+        >
+          🧭 Explore
         </RouterLink>
       </li>
       <li>
