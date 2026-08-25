@@ -6,6 +6,7 @@
       <RouterLink
         :to="{ name: 'home' }"
         class="font-display text-lg font-bold tracking-wide text-white"
+        @click="reset"
       >
         🍸 Cocktail Recipes
       </RouterLink>
@@ -70,6 +71,9 @@
 
 <script setup>
 import { ref } from "vue";
+import { useCocktails } from "@/composables/useCocktails";
+
+const { reset } = useCocktails();
 
 const isOpen = ref(false);
 </script>

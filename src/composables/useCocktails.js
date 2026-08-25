@@ -1,13 +1,15 @@
 import { ref } from "vue";
 import { searchCocktails } from "@/api/cocktailDb";
 
-export function useCocktails() {
-  const drinks = ref([]);
-  const isLoading = ref(false);
-  const errorMessage = ref("");
+const drinks = ref([]);
+const isLoading = ref(false);
+const errorMessage = ref("");
+const hasSearched = ref(false);
 
+export function useCocktails() {
   async function search(query) {
     isLoading.value = true;
+    hasSearched.value = true;
     errorMessage.value = "";
 
     try {
@@ -21,5 +23,11 @@ export function useCocktails() {
     }
   }
 
-  return { drinks, isLoading, errorMessage, search };
+  function reset() {
+    drinks.value = [];
+    errorMessage.value = "";
+    hasSearched.value = false;
+  }
+
+  return { drinks, isLoading, errorMessage, hasSearched, search, reset };
 }

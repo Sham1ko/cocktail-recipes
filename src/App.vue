@@ -5,11 +5,7 @@ import CustomHeader from "@/components/CustomHeader.vue";
 <template>
   <div class="flex h-full flex-col">
     <CustomHeader />
-    <RouterView v-slot="{ Component }">
-      <KeepAlive include="HomeView">
-        <component :is="Component" />
-      </KeepAlive>
-    </RouterView>
+    <RouterView />
   </div>
 </template>
 

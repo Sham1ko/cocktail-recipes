@@ -14,12 +14,23 @@
     <div
       class="flex w-full max-w-xl flex-col gap-2 rounded-2xl border border-white/15 bg-white/10 p-2 backdrop-blur-md sm:flex-row"
     >
-      <input
-        v-model="nameCocktail"
-        type="text"
-        placeholder="Enter a cocktail name..."
-        class="w-full rounded-xl bg-white/95 px-4 py-3 text-gray-900 placeholder-gray-500 outline-none transition focus:ring-2 focus:ring-amber-400"
-      />
+      <div class="relative w-full">
+        <input
+          v-model="nameCocktail"
+          type="text"
+          placeholder="Enter a cocktail name..."
+          class="w-full rounded-xl bg-white/95 px-4 py-3 pr-10 text-gray-900 placeholder-gray-500 outline-none transition focus:ring-2 focus:ring-amber-400"
+        />
+        <button
+          v-if="nameCocktail || hasSearched"
+          type="button"
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-lg leading-none text-gray-400 transition hover:text-gray-700"
+          aria-label="Clear search"
+          @click="clearSearch"
+        >
+          ✕
+        </button>
+      </div>
       <button
         type="button"
         :disabled="isLoading"
@@ -74,20 +85,23 @@ import CocktailCard from "@/components/CocktailCard.vue";
 import { getRandomCocktail } from "@/api/cocktailDb";
 import { useCocktails } from "@/composables/useCocktails";
 
-defineOptions({ name: "HomeView" });
-
 const router = useRouter();
-const { drinks, isLoading, errorMessage, search } = useCocktails();
+const { drinks, isLoading, errorMessage, hasSearched, search, reset } =
+  useCocktails();
 
 const nameCocktail = ref("");
-const hasSearched = ref(false);
 
 async function getData() {
-  hasSearched.value = true;
   await search(nameCocktail.value);
 }
 
+function clearSearch() {
+  nameCocktail.value = "";
+  reset();
+}
+
 async function randomCocktail() {
+  reset();
   const randomDrink = await getRandomCocktail();
   router.push({ name: "details", params: { id: randomDrink.idDrink } });
 }
