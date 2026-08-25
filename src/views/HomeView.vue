@@ -17,11 +17,41 @@
           placeholder="Введите название коктейля"
           v-model="nameCocktail"
         />
-        <button @click="getData" class="btn btn-success">🔍 Поиск</button>
-        <button @click="randomCocktail" class="btn btn-primary">
+        <button
+          @click="getData"
+          class="btn btn-success"
+          :disabled="isLoading"
+        >
+          <span
+            v-if="isLoading"
+            class="spinner-border spinner-border-sm me-1"
+            aria-hidden="true"
+          ></span>
+          🔍 Поиск
+        </button>
+        <button
+          @click="randomCocktail"
+          class="btn btn-primary"
+          :disabled="isLoading"
+        >
           🎲 Рандом
         </button>
       </div>
+    </div>
+
+    <div
+      v-if="errorMessage"
+      class="alert alert-danger w-100 w-md-75"
+      role="alert"
+    >
+      {{ errorMessage }}
+    </div>
+    <div
+      v-else-if="hasSearched && !isLoading && drinks.length === 0"
+      class="alert alert-warning w-100 w-md-75"
+      role="alert"
+    >
+      😕 Ничего не найдено. Попробуйте другое название коктейля.
     </div>
 
     <div class="row w-100 mt-4">
@@ -44,18 +74,40 @@ const router = useRouter();
 
 const drinks = ref([]);
 const nameCocktail = ref("");
+const isLoading = ref(false);
+const errorMessage = ref("");
+const hasSearched = ref(false);
 
 async function getData() {
-  const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${nameCocktail.value}`;
-  const response = await fetch(url);
-  drinks.value = (await response.json()).drinks ?? [];
+  isLoading.value = true;
+  hasSearched.value = true;
+  errorMessage.value = "";
+
+  try {
+    const query = encodeURIComponent(nameCocktail.value.trim());
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+    drinks.value = (await response.json()).drinks ?? [];
+  } catch {
+    drinks.value = [];
+    errorMessage.value =
+      "Что-то пошло не так при поиске. Попробуйте ещё раз позже.";
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 async function randomCocktail() {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/random.php`;
   const response = await fetch(url);
   const randomDrink = await response.json();
-  router.push(`/cocktail-recipes/${randomDrink.drinks[0].idDrink}`);
+  router.push({
+    name: "details",
+    params: { id: randomDrink.drinks[0].idDrink },
+  });
 }
 </script>
 

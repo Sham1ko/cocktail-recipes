@@ -2,7 +2,7 @@
   <header class="navbar-wrapper">
     <nav class="navbar navbar-expand-lg navbar-dark container">
       <div class="container-fluid">
-        <RouterLink to="/cocktail-recipes/" class="navbar-brand fw-bold">
+        <RouterLink :to="{ name: 'home' }" class="navbar-brand fw-bold">
           🍸 Cocktail Recipes
         </RouterLink>
         <button
@@ -22,12 +22,12 @@
         >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <RouterLink to="/cocktail-recipes/" class="nav-link"
+              <RouterLink :to="{ name: 'home' }" class="nav-link"
                 >Home</RouterLink
               >
             </li>
             <li class="nav-item">
-              <RouterLink to="/cocktail-recipes/about" class="nav-link"
+              <RouterLink :to="{ name: 'about' }" class="nav-link"
                 >About</RouterLink
               >
             </li>

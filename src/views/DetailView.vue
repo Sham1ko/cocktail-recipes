@@ -2,7 +2,17 @@
   <main
     class="details-view container d-flex flex-column justify-content-center align-items-center flex-grow-1"
   >
-    <div v-if="drink" class="row bg-light rounded shadow overflow-hidden">
+    <div v-if="isLoading" class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div
+      v-else-if="errorMessage"
+      class="alert alert-danger"
+      role="alert"
+    >
+      {{ errorMessage }}
+    </div>
+    <div v-else-if="drink" class="row bg-light rounded shadow overflow-hidden">
       <!-- Image -->
       <div
         class="col-12 col-md-6 p-4 d-flex justify-content-center align-items-center"
@@ -62,6 +72,8 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 const drink = ref(null);
+const isLoading = ref(true);
+const errorMessage = ref("");
 
 const ingredients = computed(() => {
   if (!drink.value) return [];
@@ -81,13 +93,28 @@ const ingredients = computed(() => {
 onMounted(getDetailCocktail);
 
 async function getDetailCocktail() {
-  const id = route.params.id;
-  const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-  const response = await fetch(url);
-  const json = await response.json();
-  drink.value = json.drinks?.[0] || null;
-  if (drink.value) {
-    document.title = `${drink.value.strDrink} — Cocktail Recipes`;
+  isLoading.value = true;
+  errorMessage.value = "";
+
+  try {
+    const id = route.params.id;
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+    drink.value = (await response.json()).drinks?.[0] || null;
+    if (drink.value) {
+      document.title = `${drink.value.strDrink} — Cocktail Recipes`;
+    } else {
+      errorMessage.value = "Cocktail not found.";
+    }
+  } catch {
+    drink.value = null;
+    errorMessage.value =
+      "Failed to load cocktail details. Please try again later.";
+  } finally {
+    isLoading.value = false;
   }
 }
 </script>
