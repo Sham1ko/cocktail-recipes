@@ -17,7 +17,7 @@
       <input
         v-model="nameCocktail"
         type="text"
-        placeholder="Введите название коктейля"
+        placeholder="Enter a cocktail name..."
         class="w-full rounded-xl bg-white/95 px-4 py-3 text-gray-900 placeholder-gray-500 outline-none transition focus:ring-2 focus:ring-amber-400"
       />
       <button
@@ -31,7 +31,7 @@
           class="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
           aria-hidden="true"
         ></span>
-        🔍 Поиск
+        🔍 Search
       </button>
       <button
         type="button"
@@ -39,7 +39,7 @@
         class="rounded-xl bg-amber-400 px-5 py-3 font-semibold text-gray-950 transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-50"
         @click="randomCocktail"
       >
-        🎲 Рандом
+        🎲 Random
       </button>
     </div>
 
@@ -55,7 +55,7 @@
       class="mt-6 w-full max-w-xl rounded-xl border border-amber-400/30 bg-amber-500/15 px-4 py-3 text-amber-100 backdrop-blur"
       role="alert"
     >
-      😕 Ничего не найдено. Попробуйте другое название коктейля.
+      😕 Nothing found. Try another cocktail name.
     </div>
 
     <div

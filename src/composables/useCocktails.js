@@ -15,7 +15,7 @@ export function useCocktails() {
     } catch {
       drinks.value = [];
       errorMessage.value =
-        "Что-то пошло не так при поиске. Попробуйте ещё раз позже.";
+        "Something went wrong while searching. Please try again later.";
     } finally {
       isLoading.value = false;
     }
