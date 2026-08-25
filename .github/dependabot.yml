@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "Sham1ko"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
