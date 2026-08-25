@@ -30,55 +30,55 @@
 
     <div
       v-else-if="drink"
-      class="grid w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl shadow-black/40 md:grid-cols-2"
+      class="grid w-full max-w-4xl overflow-hidden rounded-2xl border border-white/15 bg-white/10 shadow-xl shadow-black/30 backdrop-blur-md md:grid-cols-2"
     >
       <div class="flex items-center justify-center p-6">
         <img
           :src="drink.strDrinkThumb"
           :alt="drink.strDrink"
-          class="max-h-96 w-full rounded-xl border border-gray-200 object-cover"
+          class="max-h-96 w-full rounded-xl border border-white/15 object-cover"
         />
       </div>
 
-      <div class="p-6 text-left text-gray-800">
-        <h2 class="font-display mb-4 text-3xl font-bold text-gray-900">
+      <div class="p-6 text-left text-white/90">
+        <h2 class="font-display mb-4 text-3xl font-bold text-white">
           {{ drink.strDrink }}
         </h2>
 
         <dl class="mb-5 space-y-1 text-sm">
           <div>
-            <dt class="inline font-semibold">Category:</dt>
-            <dd class="inline">{{ drink.strCategory }}</dd>
+            <dt class="inline font-semibold text-white">Category:</dt>
+            <dd class="inline text-white/80">{{ drink.strCategory }}</dd>
           </div>
           <div>
-            <dt class="inline font-semibold">Alcoholic:</dt>
-            <dd class="inline">{{ drink.strAlcoholic }}</dd>
+            <dt class="inline font-semibold text-white">Alcoholic:</dt>
+            <dd class="inline text-white/80">{{ drink.strAlcoholic }}</dd>
           </div>
           <div>
-            <dt class="inline font-semibold">Glass type:</dt>
-            <dd class="inline">{{ drink.strGlass }}</dd>
+            <dt class="inline font-semibold text-white">Glass type:</dt>
+            <dd class="inline text-white/80">{{ drink.strGlass }}</dd>
           </div>
         </dl>
 
-        <h3 class="mb-2 font-semibold text-gray-900">🧪 Ingredients</h3>
-        <ul class="mb-5 space-y-1 text-sm">
+        <h3 class="mb-2 font-semibold text-white">🧪 Ingredients</h3>
+        <ul class="mb-5 space-y-1 text-sm text-white/85">
           <li v-for="(ingredient, index) in ingredients" :key="index">
-            <span class="text-amber-600">•</span>
+            <span class="text-amber-400">•</span>
             {{ ingredient.name }}
-            <span v-if="ingredient.measure" class="text-gray-500">
+            <span v-if="ingredient.measure" class="text-white/60">
               — {{ ingredient.measure }}</span
             >
           </li>
         </ul>
 
-        <h3 class="mb-2 font-semibold text-gray-900">📋 Instructions</h3>
-        <p class="text-sm leading-relaxed text-gray-700">
+        <h3 class="mb-2 font-semibold text-white">📋 Instructions</h3>
+        <p class="text-sm leading-relaxed text-white/80">
           {{ drink.strInstructions }}
         </p>
 
         <div
           v-if="drink.strImageSource || drink.strImageAttribution"
-          class="mt-5 border-t border-gray-200 pt-3 text-xs text-gray-500"
+          class="mt-5 border-t border-white/15 pt-3 text-xs text-white/60"
         >
           <p v-if="drink.strImageSource">
             📷 Image source:
@@ -86,7 +86,7 @@
               :href="drink.strImageSource"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-blue-600 underline underline-offset-2 hover:text-blue-500"
+              class="text-amber-300 underline underline-offset-2 hover:text-amber-200"
               >{{ drink.strImageSource }}</a
             >
           </p>
