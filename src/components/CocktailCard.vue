@@ -15,10 +15,10 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["drink"],
-};
+<script setup>
+defineProps({
+  drink: { type: Object, required: true },
+});
 </script>
 
 <style scoped>

@@ -56,45 +56,40 @@
   </main>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      drink: null,
-    };
-  },
-  computed: {
-    ingredients() {
-      if (!this.drink) return [];
-      const list = [];
+<script setup>
+import { computed, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 
-      for (let i = 1; i <= 15; i++) {
-        const name = this.drink[`strIngredient${i}`];
-        const measure = this.drink[`strMeasure${i}`];
-        if (name) {
-          list.push({ name, measure });
-        }
-      }
+const route = useRoute();
+const drink = ref(null);
 
-      return list;
-    },
-  },
-  mounted() {
-    this.getDetailCocktail();
-  },
-  methods: {
-    async getDetailCocktail() {
-      const id = this.$route.params.id;
-      const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-      const response = await fetch(url);
-      const json = await response.json();
-      this.drink = json.drinks?.[0] || null;
-      if (this.drink) {
-        document.title = `${this.drink.strDrink} — Cocktail Recipes`;
-      }
-    },
-  },
-};
+const ingredients = computed(() => {
+  if (!drink.value) return [];
+  const list = [];
+
+  for (let i = 1; i <= 15; i++) {
+    const name = drink.value[`strIngredient${i}`];
+    const measure = drink.value[`strMeasure${i}`];
+    if (name) {
+      list.push({ name, measure });
+    }
+  }
+
+  return list;
+});
+
+onMounted(getDetailCocktail);
+
+async function getDetailCocktail() {
+  const id = route.params.id;
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const response = await fetch(url);
+  const json = await response.json();
+  drink.value = json.drinks?.[0] || null;
+  if (drink.value) {
+    document.title = `${drink.value.strDrink} — Cocktail Recipes`;
+  }
+}
 </script>
 
 <style scoped>

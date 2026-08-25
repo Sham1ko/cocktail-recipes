@@ -2,7 +2,7 @@
   <main
     :class="[
       'container d-flex flex-column justify-content-center align-items-center text-center flex-grow-1',
-      data.drinks.length > 0 ? 'has-results-padding' : '',
+      drinks.length > 0 ? 'has-results-padding' : '',
     ]"
   >
     <div class="search-logo text-white fs-1 mb-4 fw-bold">Search Cocktail</div>
@@ -26,7 +26,7 @@
 
     <div class="row w-100 mt-4">
       <cocktail-card
-        v-for="item in data.drinks"
+        v-for="item in drinks"
         :key="item.idDrink"
         :drink="item"
         class="col-12 col-sm-6 col-md-4 mb-4"
@@ -35,33 +35,28 @@
   </main>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import CocktailCard from "@/components/CocktailCard.vue";
 
-export default {
-  components: { CocktailCard },
-  data() {
-    return {
-      data: {
-        drinks: [],
-      },
-      nameCocktail: "",
-    };
-  },
-  methods: {
-    async getData() {
-      const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${this.nameCocktail}`;
-      const response = await fetch(url);
-      this.data = await response.json();
-    },
-    async randomCocktail() {
-      const url = `https://www.thecocktaildb.com/api/json/v1/1/random.php`;
-      const response = await fetch(url);
-      const randomDrink = await response.json();
-      this.$router.push(`/cocktail-recipes/${randomDrink.drinks[0].idDrink}`);
-    },
-  },
-};
+const router = useRouter();
+
+const drinks = ref([]);
+const nameCocktail = ref("");
+
+async function getData() {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${nameCocktail.value}`;
+  const response = await fetch(url);
+  drinks.value = (await response.json()).drinks ?? [];
+}
+
+async function randomCocktail() {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/random.php`;
+  const response = await fetch(url);
+  const randomDrink = await response.json();
+  router.push(`/cocktail-recipes/${randomDrink.drinks[0].idDrink}`);
+}
 </script>
 
 <style scoped>
