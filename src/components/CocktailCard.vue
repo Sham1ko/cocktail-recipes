@@ -1,22 +1,20 @@
 <template>
-  <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-2 mb-4">
-    <RouterLink
-      :to="{ name: 'details', params: { id: drink.idDrink } }"
-      class="card-link"
-    >
-      <div class="card h-100 shadow-sm">
-        <img
-          :src="drink.strDrinkThumb"
-          class="card-img-top"
-          :alt="drink.strDrink"
-          loading="lazy"
-        />
-        <div class="card-body">
-          <h5 class="card-title mb-0">{{ drink.strDrink }}</h5>
-        </div>
-      </div>
-    </RouterLink>
-  </div>
+  <RouterLink
+    :to="{ name: 'details', params: { id: drink.idDrink } }"
+    class="group block overflow-hidden rounded-2xl border border-white/15 bg-white/10 shadow-lg shadow-black/30 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-amber-400/40 hover:bg-white/15"
+  >
+    <img
+      :src="drink.strDrinkThumb"
+      :alt="drink.strDrink"
+      loading="lazy"
+      class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
+    />
+    <div class="p-4">
+      <h3 class="truncate font-display text-lg font-semibold text-white">
+        {{ drink.strDrink }}
+      </h3>
+    </div>
+  </RouterLink>
 </template>
 
 <script setup>
@@ -24,19 +22,3 @@ defineProps({
   drink: { type: Object, required: true },
 });
 </script>
-
-<style scoped>
-.card-link {
-  text-decoration: none;
-  color: inherit;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-  display: block;
-}
-
-.card-link:hover .card {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-</style>

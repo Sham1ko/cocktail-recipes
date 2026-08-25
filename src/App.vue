@@ -3,7 +3,7 @@ import CustomHeader from "@/components/CustomHeader.vue";
 </script>
 
 <template>
-  <div class="d-flex flex-column h-100">
+  <div class="flex h-full flex-col">
     <CustomHeader />
     <RouterView />
   </div>

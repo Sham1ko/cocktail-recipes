@@ -1,62 +1,68 @@
 <template>
   <main
-    :class="[
-      'container d-flex flex-column justify-content-center align-items-center text-center flex-grow-1',
-      drinks.length > 0 ? 'has-results-padding' : '',
-    ]"
+    class="flex w-full grow flex-col items-center justify-center px-4 pb-16 pt-28 text-center"
   >
-    <div class="search-logo text-white fs-1 mb-4 fw-bold">Search Cocktail</div>
+    <h1
+      class="font-display mb-2 text-4xl font-bold tracking-wide text-white drop-shadow-lg sm:text-5xl"
+    >
+      Search Cocktail
+    </h1>
+    <p class="mb-8 text-white/70">
+      Find your favorite drink or let luck choose for you 🍀
+    </p>
 
-    <div class="search-box w-100 w-md-75 px-3">
-      <div
-        class="input-group mb-3 shadow rounded overflow-hidden bg-white bg-opacity-75"
+    <div
+      class="flex w-full max-w-xl flex-col gap-2 rounded-2xl border border-white/15 bg-white/10 p-2 backdrop-blur-md sm:flex-row"
+    >
+      <input
+        v-model="nameCocktail"
+        type="text"
+        placeholder="Введите название коктейля"
+        class="w-full rounded-xl bg-white/95 px-4 py-3 text-gray-900 placeholder-gray-500 outline-none transition focus:ring-2 focus:ring-amber-400"
+      />
+      <button
+        type="button"
+        :disabled="isLoading"
+        class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
+        @click="getData"
       >
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Введите название коктейля"
-          v-model="nameCocktail"
-        />
-        <button @click="getData" class="btn btn-success" :disabled="isLoading">
-          <span
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm me-1"
-            aria-hidden="true"
-          ></span>
-          🔍 Поиск
-        </button>
-        <button
-          @click="randomCocktail"
-          class="btn btn-primary"
-          :disabled="isLoading"
-        >
-          🎲 Рандом
-        </button>
-      </div>
+        <span
+          v-if="isLoading"
+          class="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
+          aria-hidden="true"
+        ></span>
+        🔍 Поиск
+      </button>
+      <button
+        type="button"
+        :disabled="isLoading"
+        class="rounded-xl bg-amber-400 px-5 py-3 font-semibold text-gray-950 transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-50"
+        @click="randomCocktail"
+      >
+        🎲 Рандом
+      </button>
     </div>
 
     <div
       v-if="errorMessage"
-      class="alert alert-danger w-100 w-md-75"
+      class="mt-6 w-full max-w-xl rounded-xl border border-red-400/30 bg-red-500/20 px-4 py-3 text-red-100 backdrop-blur"
       role="alert"
     >
       {{ errorMessage }}
     </div>
     <div
       v-else-if="hasSearched && !isLoading && drinks.length === 0"
-      class="alert alert-warning w-100 w-md-75"
+      class="mt-6 w-full max-w-xl rounded-xl border border-amber-400/30 bg-amber-500/15 px-4 py-3 text-amber-100 backdrop-blur"
       role="alert"
     >
       😕 Ничего не найдено. Попробуйте другое название коктейля.
     </div>
 
-    <div class="row w-100 mt-4">
-      <CocktailCard
-        v-for="item in drinks"
-        :key="item.idDrink"
-        :drink="item"
-        class="col-12 col-sm-6 col-md-4 mb-4"
-      />
+    <div
+      v-if="drinks.length > 0"
+      class="mt-10 grid w-full max-w-6xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
+      <CocktailCard v-for="item in drinks" :key="item.idDrink" :drink="item" />
     </div>
   </main>
 </template>
@@ -84,46 +90,3 @@ async function randomCocktail() {
   router.push({ name: "details", params: { id: randomDrink.idDrink } });
 }
 </script>
-
-<style scoped>
-.search-logo {
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-}
-
-.search-box input {
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border: none;
-}
-
-.search-box button {
-  min-width: 100px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.search-box button:hover {
-  transform: translateY(-1px);
-  opacity: 0.9;
-}
-
-@media (max-width: 768px) {
-  .input-group {
-    flex-direction: column;
-    gap: 0.5rem;
-    border-radius: 0.5rem;
-  }
-
-  .input-group input {
-    border-radius: 0.5rem !important;
-  }
-
-  .search-box button {
-    width: 100%;
-  }
-}
-
-.has-results-padding {
-  padding-top: 60px; /* высота хедера */
-}
-</style>
