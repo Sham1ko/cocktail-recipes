@@ -89,6 +89,9 @@ export default {
       const response = await fetch(url);
       const json = await response.json();
       this.drink = json.drinks?.[0] || null;
+      if (this.drink) {
+        document.title = `${this.drink.strDrink} — Cocktail Recipes`;
+      }
     },
   },
 };

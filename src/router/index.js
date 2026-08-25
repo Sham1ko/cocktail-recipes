@@ -7,11 +7,13 @@ const router = createRouter({
       path: "/cocktail-recipes/",
       name: "home",
       component: () => import("../views/HomeView.vue"),
+      meta: { title: "Cocktail Recipes — Search Drinks" },
     },
     {
       path: "/cocktail-recipes/about",
       name: "about",
       component: () => import("../views/AboutView.vue"),
+      meta: { title: "About — Cocktail Recipes" },
     },
     {
       path: "/cocktail-recipes/:id",
@@ -19,6 +21,10 @@ const router = createRouter({
       component: () => import("../views/DetailView.vue"),
     },
   ],
+});
+
+router.afterEach((to) => {
+  document.title = to.meta.title ?? "Cocktail Recipes";
 });
 
 export default router;
