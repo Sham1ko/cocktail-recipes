@@ -4,7 +4,7 @@ import CustomHeader from "@/components/CustomHeader.vue";
 
 <template>
   <div class="d-flex flex-column h-100">
-    <custom-header />
+    <CustomHeader />
     <RouterView />
   </div>
 </template>

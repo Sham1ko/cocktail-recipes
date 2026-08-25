@@ -51,7 +51,7 @@
     </div>
 
     <div class="row w-100 mt-4">
-      <cocktail-card
+      <CocktailCard
         v-for="item in drinks"
         :key="item.idDrink"
         :drink="item"
