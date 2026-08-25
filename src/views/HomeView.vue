@@ -74,6 +74,8 @@ import CocktailCard from "@/components/CocktailCard.vue";
 import { getRandomCocktail } from "@/api/cocktailDb";
 import { useCocktails } from "@/composables/useCocktails";
 
+defineOptions({ name: "HomeView" });
+
 const router = useRouter();
 const { drinks, isLoading, errorMessage, search } = useCocktails();
 
