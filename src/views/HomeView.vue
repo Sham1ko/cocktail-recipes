@@ -14,17 +14,18 @@
     <div
       class="flex w-full max-w-xl flex-col gap-2 rounded-2xl border border-white/15 bg-white/10 p-2 backdrop-blur-md sm:flex-row"
     >
-      <div class="relative w-full">
+      <div class="relative w-full sm:w-auto sm:flex-1">
         <input
           v-model="nameCocktail"
           type="text"
           placeholder="Enter a cocktail name..."
-          class="w-full rounded-xl bg-white/95 px-4 py-3 pr-10 text-gray-900 placeholder-gray-500 outline-none transition focus:ring-2 focus:ring-amber-400"
+          class="w-full rounded-xl bg-white/95 px-4 py-3 pr-11 text-gray-900 placeholder-gray-500 outline-none transition focus:ring-2 focus:ring-amber-400"
+          @keydown.enter="getData"
         />
         <button
           v-if="nameCocktail || hasSearched"
           type="button"
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-lg leading-none text-gray-400 transition hover:text-gray-700"
+          class="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-gray-200 text-sm text-gray-600 transition hover:bg-gray-300 hover:text-gray-900"
           aria-label="Clear search"
           @click="clearSearch"
         >
@@ -34,7 +35,7 @@
       <button
         type="button"
         :disabled="isLoading"
-        class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
         @click="getData"
       >
         <span
@@ -47,7 +48,7 @@
       <button
         type="button"
         :disabled="isLoading"
-        class="rounded-xl bg-amber-400 px-5 py-3 font-semibold text-gray-950 transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-50"
+        class="whitespace-nowrap rounded-xl bg-amber-400 px-5 py-3 font-semibold text-gray-950 transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-50"
         @click="randomCocktail"
       >
         🎲 Random
@@ -92,6 +93,7 @@ const { drinks, isLoading, errorMessage, hasSearched, search, reset } =
 const nameCocktail = ref("");
 
 async function getData() {
+  if (isLoading.value) return;
   await search(nameCocktail.value);
 }
 
