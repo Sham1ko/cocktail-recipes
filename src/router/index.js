@@ -16,6 +16,12 @@ const router = createRouter({
       meta: { title: "About — Cocktail Recipes" },
     },
     {
+      path: "/cocktail-recipes/favorites",
+      name: "favorites",
+      component: () => import("../views/FavoritesView.vue"),
+      meta: { title: "Favorites — Cocktail Recipes" },
+    },
+    {
       path: "/cocktail-recipes/:id",
       name: "details",
       component: () => import("../views/DetailView.vue"),

@@ -79,9 +79,12 @@
         </div>
 
         <div class="p-6 text-left text-white/90">
-          <h2 class="font-display mb-4 text-3xl font-bold text-white">
-            {{ drink.strDrink }}
-          </h2>
+          <div class="mb-4 flex items-start justify-between gap-3">
+            <h2 class="font-display text-3xl font-bold text-white">
+              {{ drink.strDrink }}
+            </h2>
+            <FavoriteButton :drink="drink" :floating="false" />
+          </div>
 
           <dl class="mb-5 space-y-1 text-sm">
             <div>
@@ -142,6 +145,7 @@
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCocktail } from "@/composables/useCocktail";
+import FavoriteButton from "@/components/FavoriteButton.vue";
 
 const route = useRoute();
 const router = useRouter();

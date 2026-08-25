@@ -33,6 +33,20 @@
         </li>
         <li>
           <RouterLink
+            :to="{ name: 'favorites' }"
+            class="inline-flex items-center gap-1.5 text-white/80 transition hover:text-amber-400"
+          >
+            ❤️ Favorites
+            <span
+              v-if="count > 0"
+              class="rounded-full bg-amber-400 px-2 py-0.5 text-xs font-bold text-gray-950"
+            >
+              {{ count }}
+            </span>
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink
             :to="{ name: 'about' }"
             class="text-white/80 transition hover:text-amber-400"
           >
@@ -58,6 +72,21 @@
       </li>
       <li>
         <RouterLink
+          :to="{ name: 'favorites' }"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-amber-400"
+          @click="isOpen = false"
+        >
+          ❤️ Favorites
+          <span
+            v-if="count > 0"
+            class="rounded-full bg-amber-400 px-2 py-0.5 text-xs font-bold text-gray-950"
+          >
+            {{ count }}
+          </span>
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink
           :to="{ name: 'about' }"
           class="block rounded-lg px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-amber-400"
           @click="isOpen = false"
@@ -70,10 +99,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useCocktails } from "@/composables/useCocktails";
+import { useFavorites } from "@/composables/useFavorites";
 
 const { reset } = useCocktails();
+const { favorites } = useFavorites();
+
+const count = computed(() => favorites.value.length);
 
 const isOpen = ref(false);
 </script>
