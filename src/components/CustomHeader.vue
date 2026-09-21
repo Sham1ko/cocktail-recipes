@@ -5,10 +5,17 @@
     <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
       <RouterLink
         :to="{ name: 'home' }"
-        class="font-display text-lg font-bold tracking-wide text-white"
+        class="flex items-center gap-2.5 font-display text-lg font-bold tracking-wide text-white"
         @click="reset"
       >
-        🍸 Cocktail Recipes
+        <img
+          src="@/assets/logo.svg"
+          alt="Mixora logo"
+          class="h-8 w-8 rounded-lg"
+          width="32"
+          height="32"
+        />
+        Mixora
       </RouterLink>
 
       <button
