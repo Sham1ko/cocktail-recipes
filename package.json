@@ -11,13 +11,13 @@
     "format:check": "prettier --check src/"
   },
   "dependencies": {
-    "vue": "^3.5.42",
+    "vue": "^3.5.43",
     "vue-router": "^5.3.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
-    "@vitejs/plugin-vue": "^6.0.8",
-    "prettier": "^3.9.6",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "prettier": "^3.9.8",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.0"
   }
